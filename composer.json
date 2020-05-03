@@ -1,0 +1,14 @@
+{
+  "name": "directus/saml2",
+  "license": "GPL-3.0-only",
+  "description": "Directus 7 API extension for SAMLv2 based SSO authentication",
+  "require": {
+    "php": "^7.1",
+    "lightsaml/lightsaml": "~1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mathielen\\": "src/Mathielen/"
+    }
+  }
+}

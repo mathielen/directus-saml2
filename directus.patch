@@ -1,0 +1,18 @@
+Index: src/core/Directus/Config/Schema/Schema.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/core/Directus/Config/Schema/Schema.php	(revision d67cfc65bf8c5b011c45319ea928c3a43cd436f8)
++++ src/core/Directus/Config/Schema/Schema.php	(date 1588537208137)
+@@ -123,6 +123,10 @@
+                 new Value('secret_key', Types::STRING, '<type-a-secret-authentication-key-string>'),
+                 new Value('public_key', Types::STRING, '<type-a-public-authentication-key-string>'),
+                 new Group('social_providers', [
++					new Group('saml2?', [
++						new Value('entity_id', Types::STRING, ''),
++						new Value('sign_on_service_url', Types::STRING, ''),
++					]),
+                     new Group('okta?', [
+                         new Value('client_id', Types::STRING, ''),
+                         new Value('client_secret', Types::STRING, ''),
