@@ -1,6 +1,6 @@
 via https://github.com/directus/directus/issues/2675
 
-#Integrate into directus8
+# Integrate into directus8
 1. `git clone` this project somewhere on your server
 2. `composer install`
 3. symlink the 2 extension points from to respective directories
