@@ -2,7 +2,7 @@ via https://github.com/directus/directus/issues/2675
 
 1. `git clone` this project somewhere on your server
 2. `composer install`
-3. symlink the 2 extension points from to respective directories
+3. symlink the 2 extension points from this directive to the respective directories in your directus installation
    ```bash
    ln -s public/extensions/custom/auth/saml2 /path/to/directus/public/extensions/custom/auth/
    ln -s public/extensions/custom/endpoints/saml2 /path/to/directus/public/extensions/custom/endpoints/
