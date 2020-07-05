@@ -90,7 +90,7 @@ class LoginCheckHandler
 
 	public function handleLogout(Request $request, Response $response)
 	{
-		//TODO call single-logout endpoint
+		return $response->withJson(null);
 	}
 
 }
