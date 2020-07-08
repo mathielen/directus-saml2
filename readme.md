@@ -13,7 +13,8 @@ via https://github.com/directus/directus/issues/2675
    'social_providers' => [
      'saml2' => [
          'entity_id' => 'entity-id',
-         'sign_on_service_url' => '<url-of-idp>',
+         'single_sign_on_service' => '<login-url-of-idp>',
+         'single_logout_service' => '<logout-url-of-idp>',
      ],
      ...
    ```

@@ -25,7 +25,7 @@ class SamlProvider
 			->setProtocolBinding(SamlConstants::BINDING_SAML2_HTTP_POST)
 			->setID(Helper::generateID())
 			->setIssueInstant(new \DateTime())
-			->setDestination($this->options['sign_on_service_url'])
+			->setDestination($this->options['single_sign_on_service'])
 			->setIssuer(new Issuer($this->options['entity_id']))
 		;
 

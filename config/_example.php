@@ -124,7 +124,8 @@ return [
         'social_providers' => [
         	// 'saml2' => [
 			//     'entity_id' => 'entity-id',
-			//     'sign_on_service_url' => '<url-of-idp>',
+			//     'single_sign_on_service' => '<url-of-idp>',
+			//	   'single_logout_service' => '<logout-url-of-idp>',
 			// ],
             // 'okta' => [
             //     'client_id' => '',

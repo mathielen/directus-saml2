@@ -12,7 +12,7 @@ class Provider extends AbstractSocialProvider
 	protected function createProvider()
 	{
 		$config = [
-			'sign_on_service_url' => $this->config['sign_on_service_url'],
+			'single_sign_on_service' => $this->config['single_sign_on_service'],
 			'entity_id' => $this->config['entity_id']
 		];
 
