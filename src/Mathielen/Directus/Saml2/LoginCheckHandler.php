@@ -90,6 +90,7 @@ class LoginCheckHandler
 				'email' => $uid,
 				'timezone' => 'UTC',
 				'locale' => $attributes['locale'][0],
+				'password' => 'disabled-by-sso'
 			]);
 			$row->save();
 		}
