@@ -59,43 +59,27 @@ class LoginCheckHandler
 			}
 		}
 
-		$uid = $this->getOrCreateUserIfNotExists($attributes);
+		$saml2Config = self::getDirectusSaml2Config();
+		$userCreatorCls = $saml2Config['user_creator_cls'] ?? DefaultSamlUserCreator::class;
+
+		if (!class_exists($userCreatorCls)) {
+			throw new \RuntimeException("User Creator class '$userCreatorCls' does not exist");
+		}
+
+		$userCreator = new $userCreatorCls();
+		$uid = $userCreator->getOrCreateUserIfNotExists($attributes);
 
 		$projectName = \Directus\get_api_project_from_request();
 		return $response->withRedirect('/'.$projectName.'/auth/sso/saml2/callback?uid='.$uid); //call mandatory auth-callback function
 	}
 
-	private function getOrCreateUserIfNotExists(array $attributes)
+	private static function getDirectusSaml2Config(): array
 	{
-		$uid = $attributes['uid'][0];
+		$projectName = \Directus\get_api_project_from_request();
+		$config = get_project_config($projectName);
+		$authConfig = $config->get('auth');
 
-		$tableGateway = TableGatewayFactory::create(SchemaManager::COLLECTION_USERS, ['acl' => false]);
-		$user = $tableGateway->findOneBy('email', $uid); //TODO make uid field configurable
-		if (!$user) {
-			//TODO make role-mapping to directus roles configureable
-			if (in_array('ROLE_FRONTEND_ADMINISTRATOR', $attributes['roles'])) {
-				$role = 1;
-			} elseif (in_array('ROLE_FRONTEND_CMS', $attributes['roles'])) {
-				$role = 3;
-			} else {
-				throw new \RuntimeException("Not allowed");
-			}
-
-			$row = $tableGateway->newRow();
-			$row->populate([ //TODO make configureable
-				'status' => 'active',
-				'role' => $role,
-				'first_name' => $attributes['givenName'][0],
-				'last_name' => $attributes['sn'][0],
-				'email' => $uid,
-				'timezone' => 'UTC',
-				'locale' => $attributes['locale'][0],
-				'password' => 'disabled-by-sso'
-			]);
-			$row->save();
-		}
-
-		return $uid;
+		return $authConfig['social_providers']['saml2'];
 	}
 
 	public function handleLogout(Request $request, Response $response)
@@ -119,11 +103,9 @@ class LoginCheckHandler
 		/** @var LogoutRequest $ipRequest */
 		$ipRequest = $messageContext->getMessage();
 
-		$projectName = \Directus\get_api_project_from_request();
-		$config = get_project_config($projectName);
-		$authConfig = $config->get('auth');
-		$entityId = $authConfig['social_providers']['saml2']['entity_id'];
-		$singleLogoutUrl = $authConfig['social_providers']['saml2']['single_logout_service'];
+		$saml2Config = self::getDirectusSaml2Config();
+		$entityId = $saml2Config['entity_id'];
+		$singleLogoutUrl = $saml2Config['single_logout_service'];
 
 		$logoutResponse = new LogoutResponse();
 		$logoutResponse

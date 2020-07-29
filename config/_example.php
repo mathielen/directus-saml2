@@ -126,6 +126,7 @@ return [
 			//     'entity_id' => 'entity-id',
 			//     'single_sign_on_service' => '<url-of-idp>',
 			//	   'single_logout_service' => '<logout-url-of-idp>',
+			//	   'user_creator_cls?' => '\Your\Class',
 			// ],
             // 'okta' => [
             //     'client_id' => '',
